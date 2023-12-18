@@ -122,20 +122,12 @@ class CommunityManagerCompilerPass implements CompilerPassInterface
         }
 
         // Set email from
-        if (isset($webspaceConfig[Configuration::EMAIL_FROM])) {
-            $webspaceConfig[Configuration::EMAIL_FROM] = [
-                $webspaceConfig[Configuration::EMAIL_FROM][Configuration::EMAIL_FROM_EMAIL] => $webspaceConfig[Configuration::EMAIL_FROM][Configuration::EMAIL_FROM_NAME],
-            ];
-        } else {
+        if (!isset($webspaceConfig[Configuration::EMAIL_FROM])) {
             $webspaceConfig[Configuration::EMAIL_FROM] = null;
         }
 
         // Set email to
-        if (isset($webspaceConfig[Configuration::EMAIL_TO])) {
-            $webspaceConfig[Configuration::EMAIL_TO] = [
-                $webspaceConfig[Configuration::EMAIL_TO][Configuration::EMAIL_TO_EMAIL] => $webspaceConfig[Configuration::EMAIL_TO][Configuration::EMAIL_TO_NAME],
-            ];
-        } else {
+        if (!isset($webspaceConfig[Configuration::EMAIL_TO])) {
             $webspaceConfig[Configuration::EMAIL_TO] = $webspaceConfig[Configuration::EMAIL_FROM];
         }
 
