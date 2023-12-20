@@ -12,9 +12,9 @@
 namespace Sulu\Bundle\CommunityBundle\Mail;
 
 use Sulu\Bundle\SecurityBundle\Entity\User;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -82,13 +82,12 @@ class MailFactory implements MailFactoryInterface
      */
     protected function sendEmail($from, $to, string $subject, string $template, array $data): void
     {
-        $body = $this->twig->render($template, $data);
-
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->subject($this->translator->trans($subject))
             ->from($this->getAddress($from))
             ->to($this->getAddress($to))
-            ->html($body);
+            ->htmlTemplate($template)
+            ->context($data);
 
         $this->mailer->send($email);
     }
